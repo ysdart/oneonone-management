@@ -1,8 +1,15 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
+// メンバーデータの型定義
+interface Member {
+  name: string
+  department: string
+  status: string
+}
+
 // 仮のメンバーデータ
-const memberData = {
+const memberData: Record<number, Member> = {
   1: { name: '田中太郎', department: '開発部', status: 'アクティブ' },
   2: { name: '佐藤花子', department: '営業部', status: 'アクティブ' },
   3: { name: '鈴木一郎', department: 'マーケティング部', status: '休職中' },
