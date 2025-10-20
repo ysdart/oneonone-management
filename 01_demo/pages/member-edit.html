@@ -1,0 +1,409 @@
+<div class="member-edit">
+    <!-- ヘッダー -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2>
+                        <i class="fas fa-edit"></i> 佐藤花子 - 編集
+                    </h2>
+                    <p class="text-muted mb-0">1on1の記録と評価を編集できます</p>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-outline-secondary" 
+                            onclick="loadPage('./pages/member-detail.html')">
+                        <i class="fas fa-eye"></i> プレビュー
+                    </button>
+                    <button class="btn btn-success" onclick="saveMemberData()">
+                        <i class="fas fa-save"></i> 保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form id="member-edit-form">
+        <div class="row">
+            <!-- 左カラム: 基本情報とチャット記録 -->
+            <div class="col-md-8">
+                <!-- 予定日設定 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-calendar"></i> 予定日設定
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="scheduled-date" class="form-label">実施日</label>
+                                <input type="date" class="form-control" id="scheduled-date" 
+                                       value="2024-01-15" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="start-time" class="form-label">開始時間</label>
+                                <input type="time" class="form-control" id="start-time" 
+                                       value="10:00" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="end-time" class="form-label">終了時間</label>
+                                <input type="time" class="form-control" id="end-time" 
+                                       value="11:00" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- チャット記録編集 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-comments"></i> 1on1記録編集
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <div class="btn-group mb-2" role="group">
+                                <button type="button" class="btn btn-outline-primary active" 
+                                        onclick="switchTab('editor')">編集</button>
+                                <button type="button" class="btn btn-outline-primary" 
+                                        onclick="switchTab('preview')">プレビュー</button>
+                            </div>
+                        </div>
+                        
+                        <div id="editor-tab">
+                            <textarea class="form-control markdown-editor" id="chat-content" 
+                                      placeholder="Markdownで1on1の内容を記録してください..."># 1on1記録 - 2024年1月15日
+
+## 参加者
+- メンター: 田中太郎
+- メンバー: 佐藤花子
+
+## 議題
+1. 今月の進捗確認
+2. 目標達成状況
+3. 来月の計画
+4. キャリア相談
+
+## 内容
+
+### 進捗確認
+- 新機能開発: **80%完了**
+- テストケース作成: **完了**
+- ドキュメント整備: **30%完了**
+
+### 目標達成状況
+今月の目標は概ね達成できています。特にテストケースの作成が予定より早く完了しました。
+
+### 来月の計画
+- 新機能のリリース
+- パフォーマンス最適化
+- ドキュメント整備の完了
+
+### キャリア相談
+リードエンジニアへのステップアップを目指したいとのこと。
+- 技術スキルの向上
+- チームマネジメント経験の積み重ね
+
+## アクションアイテム
+- [ ] リードエンジニアの要件整理
+- [ ] 技術勉強会の企画
+- [ ] 次回1on1までに進捗報告</textarea>
+                        </div>
+                        
+                        <div id="preview-tab" style="display: none;">
+                            <div class="border p-3 bg-light" id="markdown-preview">
+                                <!-- プレビューがここに表示される -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右カラム: 確認事項・評価・目標 -->
+            <div class="col-md-4">
+                <!-- 確認事項回答入力 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h6 class="mb-0">
+                            <i class="fas fa-check-square"></i> 確認事項回答
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Q1. 今月の目標達成度はいかがですか？</label>
+                            <textarea class="form-control" rows="3" 
+                                      placeholder="Markdownで回答を入力...">**80%達成**しました。新機能開発が順調に進んでいます。</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Q2. 困っていることはありますか？</label>
+                            <textarea class="form-control" rows="3" 
+                                      placeholder="Markdownで回答を入力...">特にありません。チームのサポートもあり、順調です。</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Q3. 来月の目標は？</label>
+                            <textarea class="form-control" rows="3" 
+                                      placeholder="Markdownで回答を入力...">新機能のリリースと、**パフォーマンス最適化**に取り組みます。</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 評価入力 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h6 class="mb-0">
+                            <i class="fas fa-star"></i> 評価入力
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">技術スキル</label>
+                            <div class="d-flex align-items-center">
+                                <input type="range" class="form-range evaluation-slider" 
+                                       min="1" max="10" value="8" id="tech-skill" 
+                                       oninput="updateEvaluationValue('tech-skill', 'tech-skill-value')">
+                                <span class="ms-2 fw-bold" id="tech-skill-value">8</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">コミュニケーション</label>
+                            <div class="d-flex align-items-center">
+                                <input type="range" class="form-range evaluation-slider" 
+                                       min="1" max="10" value="9" id="communication" 
+                                       oninput="updateEvaluationValue('communication', 'communication-value')">
+                                <span class="ms-2 fw-bold" id="communication-value">9</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">目標達成</label>
+                            <div class="d-flex align-items-center">
+                                <input type="range" class="form-range evaluation-slider" 
+                                       min="1" max="10" value="7" id="goal-achievement" 
+                                       oninput="updateEvaluationValue('goal-achievement', 'goal-achievement-value')">
+                                <span class="ms-2 fw-bold" id="goal-achievement-value">7</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">チームワーク</label>
+                            <div class="d-flex align-items-center">
+                                <input type="range" class="form-range evaluation-slider" 
+                                       min="1" max="10" value="8" id="teamwork" 
+                                       oninput="updateEvaluationValue('teamwork', 'teamwork-value')">
+                                <span class="ms-2 fw-bold" id="teamwork-value">8</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="text-center">
+                            <h5 class="text-primary" id="total-evaluation">総合評価: 8.0/10</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 目標管理 -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">
+                            <i class="fas fa-bullseye"></i> 目標管理
+                        </h6>
+                        <button type="button" class="btn btn-sm btn-outline-primary" 
+                                onclick="addNewGoal()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="card-body goals-list">
+                        <div class="goal-item card mb-3 p-3">
+                            <div class="row mb-2">
+                                <div class="col-8">
+                                    <input type="text" class="form-control form-control-sm" 
+                                           value="新機能開発" placeholder="目標タイトル">
+                                </div>
+                                <div class="col-4">
+                                    <select class="form-select form-select-sm">
+                                        <option value="not-started">未開始</option>
+                                        <option value="in-progress" selected>進行中</option>
+                                        <option value="completed">完了</option>
+                                        <option value="on-hold">保留</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <label class="form-label form-label-sm">進捗 (%)</label>
+                                    <input type="number" class="form-control form-control-sm" 
+                                           min="0" max="100" value="80">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label form-label-sm">期限</label>
+                                    <input type="date" class="form-control form-control-sm" 
+                                           value="2024-01-31">
+                                </div>
+                            </div>
+                            <textarea class="form-control form-control-sm" rows="2" 
+                                      placeholder="目標の詳細...">新機能の開発を進めています。UI/UXの改善とパフォーマンス最適化に取り組んでいます。</textarea>
+                        </div>
+                        
+                        <div class="goal-item card mb-3 p-3">
+                            <div class="row mb-2">
+                                <div class="col-8">
+                                    <input type="text" class="form-control form-control-sm" 
+                                           value="テストケース作成" placeholder="目標タイトル">
+                                </div>
+                                <div class="col-4">
+                                    <select class="form-select form-select-sm">
+                                        <option value="not-started">未開始</option>
+                                        <option value="in-progress">進行中</option>
+                                        <option value="completed" selected>完了</option>
+                                        <option value="on-hold">保留</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <label class="form-label form-label-sm">進捗 (%)</label>
+                                    <input type="number" class="form-control form-control-sm" 
+                                           min="0" max="100" value="100">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label form-label-sm">期限</label>
+                                    <input type="date" class="form-control form-control-sm" 
+                                           value="2024-01-15">
+                                </div>
+                            </div>
+                            <textarea class="form-control form-control-sm" rows="2" 
+                                      placeholder="目標の詳細...">単体テストと統合テストのケースを作成しました。</textarea>
+                        </div>
+                        
+                        <div class="goal-item card p-3">
+                            <div class="row mb-2">
+                                <div class="col-8">
+                                    <input type="text" class="form-control form-control-sm" 
+                                           value="ドキュメント整備" placeholder="目標タイトル">
+                                </div>
+                                <div class="col-4">
+                                    <select class="form-select form-select-sm">
+                                        <option value="not-started">未開始</option>
+                                        <option value="in-progress" selected>進行中</option>
+                                        <option value="completed">完了</option>
+                                        <option value="on-hold">保留</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <label class="form-label form-label-sm">進捗 (%)</label>
+                                    <input type="number" class="form-control form-control-sm" 
+                                           min="0" max="100" value="30">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label form-label-sm">期限</label>
+                                    <input type="date" class="form-control form-control-sm" 
+                                           value="2024-02-15">
+                                </div>
+                            </div>
+                            <textarea class="form-control form-control-sm" rows="2" 
+                                      placeholder="目標の詳細...">API仕様書とユーザーマニュアルの作成を進めています。</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+// タブ切り替え
+function switchTab(tab) {
+    const editorTab = document.getElementById('editor-tab');
+    const previewTab = document.getElementById('preview-tab');
+    const buttons = document.querySelectorAll('.btn-group button');
+    
+    buttons.forEach(btn => btn.classList.remove('active'));
+    
+    if (tab === 'editor') {
+        editorTab.style.display = 'block';
+        previewTab.style.display = 'none';
+        buttons[0].classList.add('active');
+    } else {
+        editorTab.style.display = 'none';
+        previewTab.style.display = 'block';
+        buttons[1].classList.add('active');
+        toggleMarkdownPreview('chat-content', 'markdown-preview');
+    }
+}
+
+// 評価スライダーの更新
+function updateEvaluationValue(sliderId, valueId) {
+    const slider = document.getElementById(sliderId);
+    const valueDisplay = document.getElementById(valueId);
+    if (slider && valueDisplay) {
+        valueDisplay.textContent = slider.value;
+        updateTotalEvaluation();
+    }
+}
+
+// 総合評価の更新
+function updateTotalEvaluation() {
+    const techSkill = parseInt(document.getElementById('tech-skill').value);
+    const communication = parseInt(document.getElementById('communication').value);
+    const goalAchievement = parseInt(document.getElementById('goal-achievement').value);
+    const teamwork = parseInt(document.getElementById('teamwork').value);
+    
+    const total = (techSkill + communication + goalAchievement + teamwork) / 4;
+    document.getElementById('total-evaluation').textContent = `総合評価: ${total.toFixed(1)}/10`;
+}
+
+// 新しい目標を追加
+function addNewGoal() {
+    const goalContainer = document.querySelector('.goals-list');
+    const newGoal = document.createElement('div');
+    newGoal.className = 'goal-item card mb-3 p-3';
+    newGoal.innerHTML = `
+        <div class="row mb-2">
+            <div class="col-8">
+                <input type="text" class="form-control form-control-sm" 
+                       placeholder="目標タイトル">
+            </div>
+            <div class="col-4">
+                <select class="form-select form-select-sm">
+                    <option value="not-started" selected>未開始</option>
+                    <option value="in-progress">進行中</option>
+                    <option value="completed">完了</option>
+                    <option value="on-hold">保留</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-6">
+                <label class="form-label form-label-sm">進捗 (%)</label>
+                <input type="number" class="form-control form-control-sm" 
+                       min="0" max="100" value="0">
+            </div>
+            <div class="col-6">
+                <label class="form-label form-label-sm">期限</label>
+                <input type="date" class="form-control form-control-sm">
+            </div>
+        </div>
+        <textarea class="form-control form-control-sm" rows="2" 
+                  placeholder="目標の詳細..."></textarea>
+    `;
+    goalContainer.appendChild(newGoal);
+}
+
+// データ保存
+function saveMemberData() {
+    if (validateForm('member-edit-form')) {
+        showNotification('データを保存しました', 'success');
+        // 実際の実装では、HTMXでサーバーに送信
+        setTimeout(() => {
+            loadPage('./pages/member-detail.html');
+        }, 1000);
+    } else {
+        showNotification('必須項目を入力してください', 'error');
+    }
+}
+
+// 初期化
+document.addEventListener('DOMContentLoaded', function() {
+    updateTotalEvaluation();
+});
+</script>

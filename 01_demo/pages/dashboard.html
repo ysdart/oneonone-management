@@ -1,0 +1,183 @@
+<div class="dashboard">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-tachometer-alt"></i> ダッシュボード</h2>
+            <p class="text-muted">1on1の実施状況と今後の予定を確認できます</p>
+        </div>
+    </div>
+
+    <!-- 実施状況サマリー -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title text-success">
+                        <i class="fas fa-check-circle"></i> 実施済
+                    </h5>
+                    <h3 class="text-success">8</h3>
+                    <p class="text-muted">今月の実施件数</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title text-warning">
+                        <i class="fas fa-calendar-check"></i> 予定確定
+                    </h5>
+                    <h3 class="text-warning">5</h3>
+                    <p class="text-muted">今後の予定</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title text-danger">
+                        <i class="fas fa-exclamation-triangle"></i> 未確定
+                    </h5>
+                    <h3 class="text-danger">3</h3>
+                    <p class="text-muted">日程調整中</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- カレンダー -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="fas fa-calendar-alt"></i> カレンダー
+                    </h5>
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-outline-primary btn-sm" onclick="changeMonth(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <span class="btn btn-outline-primary btn-sm disabled">2024年1月</span>
+                        <button class="btn btn-outline-primary btn-sm" onclick="changeMonth(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="calendar-container">
+                        <!-- カレンダーがここに動的に生成される -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 担当メンバー一覧 -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-users"></i> 担当メンバー
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">佐藤花子</h6>
+                                <small class="text-muted">予定日: 1/15</small>
+                            </div>
+                            <span class="status-badge status-scheduled">予定確定</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">鈴木一郎</h6>
+                                <small class="text-muted">予定日: 1/18</small>
+                            </div>
+                            <span class="status-badge status-completed">実施済</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">高橋美咲</h6>
+                                <small class="text-muted">予定日: 未定</small>
+                            </div>
+                            <span class="status-badge status-pending">未確定</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">山田太郎</h6>
+                                <small class="text-muted">予定日: 1/22</small>
+                            </div>
+                            <span class="status-badge status-scheduled">予定確定</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">田中次郎</h6>
+                                <small class="text-muted">予定日: 未定</small>
+                            </div>
+                            <span class="status-badge status-pending">未確定</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary btn-sm w-100" 
+                            onclick="loadPage('./pages/members.html')">
+                        <i class="fas fa-list"></i> メンバー一覧を見る
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// カレンダーを初期化
+document.addEventListener('DOMContentLoaded', function() {
+    const calendarContainer = document.getElementById('calendar-container');
+    if (calendarContainer) {
+        calendarContainer.innerHTML = initCalendar();
+    }
+});
+
+// 月の変更
+function changeMonth(direction) {
+    // 実際の実装では、サーバーサイドで月を変更
+    console.log('月を変更:', direction);
+    showNotification('月を変更しました', 'info');
+}
+</script>
+
+<style>
+.timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -35px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.timeline-content {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 3px solid #007bff;
+}
+
+.timeline-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 15px;
+    bottom: -20px;
+    width: 2px;
+    background: #dee2e6;
+}
+</style>

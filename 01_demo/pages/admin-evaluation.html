@@ -1,0 +1,421 @@
+<div class="admin-evaluation">
+    <!-- ヘッダー -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2>
+                        <i class="fas fa-star"></i> 評価項目管理
+                    </h2>
+                    <p class="text-muted mb-0">評価項目とスケールを設定・管理します</p>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-outline-secondary" 
+                            onclick="loadPage('./pages/admin.html')">
+                        <i class="fas fa-arrow-left"></i> 管理者メニュー
+                    </button>
+                    <button class="btn btn-warning" onclick="showAddEvaluationModal()">
+                        <i class="fas fa-plus"></i> 新規追加
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 評価項目一覧 -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="fas fa-list"></i> 評価項目一覧
+            </h5>
+            <span class="badge bg-warning">4件</span>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>項目名</th>
+                            <th>説明</th>
+                            <th>スケール</th>
+                            <th>ステータス</th>
+                            <th>作成日</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>技術スキル</strong>
+                                <br><small class="text-muted">プログラミング・技術力</small>
+                            </td>
+                            <td>
+                                プログラミングスキル、技術的理解度、問題解決能力を評価します
+                            </td>
+                            <td>
+                                <span class="badge bg-primary">1-10</span>
+                                <br><small class="text-muted">10段階評価</small>
+                            </td>
+                            <td>
+                                <span class="status-badge status-scheduled">有効</span>
+                            </td>
+                            <td>
+                                <small class="text-muted">2024-01-01</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="editEvaluation(1)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="deleteEvaluation(1)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>コミュニケーション</strong>
+                                <br><small class="text-muted">対話・連携能力</small>
+                            </td>
+                            <td>
+                                チーム内でのコミュニケーション能力、報告・連絡・相談の質を評価します
+                            </td>
+                            <td>
+                                <span class="badge bg-primary">1-10</span>
+                                <br><small class="text-muted">10段階評価</small>
+                            </td>
+                            <td>
+                                <span class="status-badge status-scheduled">有効</span>
+                            </td>
+                            <td>
+                                <small class="text-muted">2024-01-01</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="editEvaluation(2)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="deleteEvaluation(2)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>目標達成</strong>
+                                <br><small class="text-muted">成果・達成度</small>
+                            </td>
+                            <td>
+                                設定した目標の達成度、成果の質と量を評価します
+                            </td>
+                            <td>
+                                <span class="badge bg-primary">1-10</span>
+                                <br><small class="text-muted">10段階評価</small>
+                            </td>
+                            <td>
+                                <span class="status-badge status-scheduled">有効</span>
+                            </td>
+                            <td>
+                                <small class="text-muted">2024-01-01</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="editEvaluation(3)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="deleteEvaluation(3)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>チームワーク</strong>
+                                <br><small class="text-muted">協調性・貢献度</small>
+                            </td>
+                            <td>
+                                チーム内での協調性、他メンバーへの貢献度を評価します
+                            </td>
+                            <td>
+                                <span class="badge bg-primary">1-10</span>
+                                <br><small class="text-muted">10段階評価</small>
+                            </td>
+                            <td>
+                                <span class="status-badge status-scheduled">有効</span>
+                            </td>
+                            <td>
+                                <small class="text-muted">2024-01-01</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="editEvaluation(4)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="deleteEvaluation(4)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 評価スケール設定 -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-sliders-h"></i> 評価スケール設定
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>現在のスケール: 1-10</h6>
+                            <div class="evaluation-scale">
+                                <div class="scale-item">
+                                    <span class="scale-number">1</span>
+                                    <span class="scale-label">最低</span>
+                                </div>
+                                <div class="scale-item">
+                                    <span class="scale-number">2-3</span>
+                                    <span class="scale-label">要改善</span>
+                                </div>
+                                <div class="scale-item">
+                                    <span class="scale-number">4-5</span>
+                                    <span class="scale-label">普通</span>
+                                </div>
+                                <div class="scale-item">
+                                    <span class="scale-number">6-7</span>
+                                    <span class="scale-label">良好</span>
+                                </div>
+                                <div class="scale-item">
+                                    <span class="scale-number">8-9</span>
+                                    <span class="scale-label">優秀</span>
+                                </div>
+                                <div class="scale-item">
+                                    <span class="scale-number">10</span>
+                                    <span class="scale-label">最高</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>スケール変更</h6>
+                            <div class="mb-3">
+                                <label for="scale-min" class="form-label">最小値</label>
+                                <input type="number" class="form-control" id="scale-min" value="1" min="1" max="10">
+                            </div>
+                            <div class="mb-3">
+                                <label for="scale-max" class="form-label">最大値</label>
+                                <input type="number" class="form-control" id="scale-max" value="10" min="1" max="10">
+                            </div>
+                            <button class="btn btn-outline-primary" onclick="updateScale()">
+                                <i class="fas fa-save"></i> スケール更新
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 新規追加モーダル -->
+<div class="modal fade" id="addEvaluationModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-star-plus"></i> 新規評価項目追加
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="add-evaluation-form">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="eval-item-name" class="form-label">項目名</label>
+                        <input type="text" class="form-control" id="eval-item-name" 
+                               placeholder="例: リーダーシップ" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="eval-item-description" class="form-label">説明</label>
+                        <textarea class="form-control" id="eval-item-description" rows="3" 
+                                  placeholder="評価項目の詳細な説明を入力してください..."></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="scale-min" class="form-label">最小値</label>
+                            <input type="number" class="form-control" id="scale-min" 
+                                   value="1" min="1" max="10" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="scale-max" class="form-label">最大値</label>
+                            <input type="number" class="form-control" id="scale-max" 
+                                   value="10" min="1" max="10" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="eval-immediate-active">
+                            <label class="form-check-label" for="eval-immediate-active">
+                                即座に有効にする
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        キャンセル
+                    </button>
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fas fa-save"></i> 保存
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 編集モーダル -->
+<div class="modal fade" id="editEvaluationModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-edit"></i> 評価項目編集
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="edit-evaluation-form">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="edit-eval-item-name" class="form-label">項目名</label>
+                        <input type="text" class="form-control" id="edit-eval-item-name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-eval-item-description" class="form-label">説明</label>
+                        <textarea class="form-control" id="edit-eval-item-description" rows="3"></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="edit-scale-min" class="form-label">最小値</label>
+                            <input type="number" class="form-control" id="edit-scale-min" 
+                                   min="1" max="10" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="edit-scale-max" class="form-label">最大値</label>
+                            <input type="number" class="form-control" id="edit-scale-max" 
+                                   min="1" max="10" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="edit-eval-immediate-active">
+                            <label class="form-check-label" for="edit-eval-immediate-active">
+                                即座に有効にする
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        キャンセル
+                    </button>
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fas fa-save"></i> 更新
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// モーダル表示
+function showAddEvaluationModal() {
+    const modal = new bootstrap.Modal(document.getElementById('addEvaluationModal'));
+    modal.show();
+}
+
+function editEvaluation(id) {
+    // 実際の実装では、サーバーからデータを取得
+    document.getElementById('edit-eval-item-name').value = '技術スキル';
+    document.getElementById('edit-eval-item-description').value = 'プログラミングスキル、技術的理解度、問題解決能力を評価します';
+    document.getElementById('edit-scale-min').value = '1';
+    document.getElementById('edit-scale-max').value = '10';
+    document.getElementById('edit-eval-immediate-active').checked = true;
+    
+    const modal = new bootstrap.Modal(document.getElementById('editEvaluationModal'));
+    modal.show();
+}
+
+function deleteEvaluation(id) {
+    if (confirm('この評価項目を削除しますか？')) {
+        showNotification('評価項目を削除しました', 'success');
+        // 実際の実装では、HTMXでサーバーに削除リクエストを送信
+    }
+}
+
+function updateScale() {
+    const min = document.getElementById('scale-min').value;
+    const max = document.getElementById('scale-max').value;
+    
+    if (parseInt(min) >= parseInt(max)) {
+        showNotification('最小値は最大値より小さくしてください', 'error');
+        return;
+    }
+    
+    showNotification(`評価スケールを${min}-${max}に更新しました`, 'success');
+    // 実際の実装では、HTMXでサーバーに送信
+}
+
+// フォーム送信
+document.getElementById('add-evaluation-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    showNotification('評価項目を追加しました', 'success');
+    const modal = bootstrap.Modal.getInstance(document.getElementById('addEvaluationModal'));
+    modal.hide();
+    // 実際の実装では、HTMXでサーバーに送信
+});
+
+document.getElementById('edit-evaluation-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    showNotification('評価項目を更新しました', 'success');
+    const modal = bootstrap.Modal.getInstance(document.getElementById('editEvaluationModal'));
+    modal.hide();
+    // 実際の実装では、HTMXでサーバーに送信
+});
+</script>
+
+<style>
+.evaluation-scale {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.scale-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.scale-number {
+    font-weight: bold;
+    color: #007bff;
+    min-width: 40px;
+}
+
+.scale-label {
+    margin-left: 10px;
+}
+</style>

@@ -1,0 +1,326 @@
+<div class="admin-check-items">
+    <!-- ヘッダー -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2>
+                        <i class="fas fa-check-square"></i> 確認事項管理
+                    </h2>
+                    <p class="text-muted mb-0">共通確認事項を設定・管理します</p>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-outline-secondary" 
+                            onclick="loadPage('./pages/admin.html')">
+                        <i class="fas fa-arrow-left"></i> 管理者メニュー
+                    </button>
+                    <button class="btn btn-success" onclick="showAddCheckItemModal()">
+                        <i class="fas fa-plus"></i> 新規追加
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 確認事項一覧 -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="fas fa-list"></i> 確認事項一覧
+            </h5>
+            <span class="badge bg-success">5件</span>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>質問内容</th>
+                            <th>適用期間</th>
+                            <th>ステータス</th>
+                            <th>作成日</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>今月の目標達成度はいかがですか？</strong>
+                                <br><small class="text-muted">目標の進捗状況を確認します</small>
+                            </td>
+                            <td>
+                                2024-01-01 ～ 2024-12-31
+                            </td>
+                            <td>
+                                <span class="status-badge status-scheduled">有効</span>
+                            </td>
+                            <td>
+                                <small class="text-muted">2024-01-01</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="editCheckItem(1)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="deleteCheckItem(1)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>困っていることはありますか？</strong>
+                                <br><small class="text-muted">課題や問題点を確認します</small>
+                            </td>
+                            <td>
+                                2024-01-01 ～ 2024-12-31
+                            </td>
+                            <td>
+                                <span class="status-badge status-scheduled">有効</span>
+                            </td>
+                            <td>
+                                <small class="text-muted">2024-01-01</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="editCheckItem(2)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="deleteCheckItem(2)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>来月の目標は？</strong>
+                                <br><small class="text-muted">次月の計画を確認します</small>
+                            </td>
+                            <td>
+                                2024-01-01 ～ 2024-12-31
+                            </td>
+                            <td>
+                                <span class="status-badge status-scheduled">有効</span>
+                            </td>
+                            <td>
+                                <small class="text-muted">2024-01-01</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="editCheckItem(3)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="deleteCheckItem(3)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>チームとの連携はいかがですか？</strong>
+                                <br><small class="text-muted">チームワークの状況を確認します</small>
+                            </td>
+                            <td>
+                                2024-02-01 ～ 2024-02-29
+                            </td>
+                            <td>
+                                <span class="status-badge status-pending">予定</span>
+                            </td>
+                            <td>
+                                <small class="text-muted">2024-01-15</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="editCheckItem(4)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="deleteCheckItem(4)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>3年後の目標は？</strong>
+                                <br><small class="text-muted">3年後の目標を確認します</small>
+                            </td>
+                            <td>
+                                2024-01-01 ～ 2024-03-31
+                            </td>
+                            <td>
+                                <span class="status-badge status-scheduled">有効</span>
+                            </td>
+                            <td>
+                                <small class="text-muted">2024-01-01</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="editCheckItem(5)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="deleteCheckItem(5)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 新規追加モーダル -->
+<div class="modal fade" id="addCheckItemModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-plus-square"></i> 新規確認事項追加
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="add-check-item-form">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="check-item-question" class="form-label">質問内容</label>
+                        <input type="text" class="form-control" id="check-item-question" 
+                               placeholder="例: 今月の目標達成度はいかがですか？" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="check-item-description" class="form-label">説明</label>
+                        <textarea class="form-control" id="check-item-description" rows="2" 
+                                  placeholder="質問の詳細な説明を入力してください..."></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="active-from" class="form-label">適用開始日</label>
+                            <input type="date" class="form-control" id="active-from" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="active-to" class="form-label">適用終了日</label>
+                            <input type="date" class="form-control" id="active-to" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="immediate-active">
+                            <label class="form-check-label" for="immediate-active">
+                                即座に有効にする
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        キャンセル
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> 保存
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 編集モーダル -->
+<div class="modal fade" id="editCheckItemModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-edit"></i> 確認事項編集
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="edit-check-item-form">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="edit-check-item-question" class="form-label">質問内容</label>
+                        <input type="text" class="form-control" id="edit-check-item-question" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-check-item-description" class="form-label">説明</label>
+                        <textarea class="form-control" id="edit-check-item-description" rows="2"></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="edit-active-from" class="form-label">適用開始日</label>
+                            <input type="date" class="form-control" id="edit-active-from" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="edit-active-to" class="form-label">適用終了日</label>
+                            <input type="date" class="form-control" id="edit-active-to" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="edit-immediate-active">
+                            <label class="form-check-label" for="edit-immediate-active">
+                                即座に有効にする
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        キャンセル
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> 更新
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// モーダル表示
+function showAddCheckItemModal() {
+    const modal = new bootstrap.Modal(document.getElementById('addCheckItemModal'));
+    modal.show();
+}
+
+function editCheckItem(id) {
+    // 実際の実装では、サーバーからデータを取得
+    document.getElementById('edit-check-item-question').value = '今月の目標達成度はいかがですか？';
+    document.getElementById('edit-check-item-description').value = '目標の進捗状況を確認します';
+    document.getElementById('edit-active-from').value = '2024-01-01';
+    document.getElementById('edit-active-to').value = '2024-12-31';
+    document.getElementById('edit-immediate-active').checked = true;
+    
+    const modal = new bootstrap.Modal(document.getElementById('editCheckItemModal'));
+    modal.show();
+}
+
+function deleteCheckItem(id) {
+    if (confirm('この確認事項を削除しますか？')) {
+        showNotification('確認事項を削除しました', 'success');
+        // 実際の実装では、HTMXでサーバーに削除リクエストを送信
+    }
+}
+
+// フォーム送信
+document.getElementById('add-check-item-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    showNotification('確認事項を追加しました', 'success');
+    const modal = bootstrap.Modal.getInstance(document.getElementById('addCheckItemModal'));
+    modal.hide();
+    // 実際の実装では、HTMXでサーバーに送信
+});
+
+document.getElementById('edit-check-item-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    showNotification('確認事項を更新しました', 'success');
+    const modal = bootstrap.Modal.getInstance(document.getElementById('editCheckItemModal'));
+    modal.hide();
+    // 実際の実装では、HTMXでサーバーに送信
+});
+</script>

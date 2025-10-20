@@ -1,0 +1,283 @@
+<div class="admin-schedule">
+    <!-- ヘッダー -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2>
+                        <i class="fas fa-calendar-alt"></i> 報告会日程管理
+                    </h2>
+                    <p class="text-muted mb-0">報告会の日程を設定・管理します</p>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-outline-secondary" 
+                            onclick="loadPage('./pages/admin.html')">
+                        <i class="fas fa-arrow-left"></i> 管理者メニュー
+                    </button>
+                    <button class="btn btn-primary" onclick="showAddMeetingModal()">
+                        <i class="fas fa-plus"></i> 新規追加
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 報告会一覧 -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="fas fa-list"></i> 報告会一覧
+            </h5>
+            <span class="badge bg-primary">3件</span>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>日付</th>
+                            <th>時間</th>
+                            <th>説明</th>
+                            <th>ステータス</th>
+                            <th>作成日</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>2024-01-31</strong>
+                                <br><small class="text-muted">水曜日</small>
+                            </td>
+                            <td>14:00-16:00</td>
+                            <td>
+                                <strong>1月定例報告会</strong>
+                                <br><small class="text-muted">月次進捗報告と来月の計画について</small>
+                            </td>
+                            <td>
+                                <span class="status-badge status-scheduled">予定</span>
+                            </td>
+                            <td>
+                                <small class="text-muted">2024-01-10</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="editMeeting(1)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="deleteMeeting(1)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>2024-02-28</strong>
+                                <br><small class="text-muted">水曜日</small>
+                            </td>
+                            <td>14:00-16:00</td>
+                            <td>
+                                <strong>2月定例報告会</strong>
+                                <br><small class="text-muted">月次進捗報告と来月の計画について</small>
+                            </td>
+                            <td>
+                                <span class="status-badge status-scheduled">予定</span>
+                            </td>
+                            <td>
+                                <small class="text-muted">2024-01-10</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="editMeeting(2)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="deleteMeeting(2)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>2024-03-31</strong>
+                                <br><small class="text-muted">日曜日</small>
+                            </td>
+                            <td>14:00-16:00</td>
+                            <td>
+                                <strong>3月定例報告会</strong>
+                                <br><small class="text-muted">月次進捗報告と来月の計画について</small>
+                            </td>
+                            <td>
+                                <span class="status-badge status-scheduled">予定</span>
+                            </td>
+                            <td>
+                                <small class="text-muted">2024-01-10</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="editMeeting(3)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="deleteMeeting(3)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 新規追加モーダル -->
+<div class="modal fade" id="addMeetingModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-calendar-plus"></i> 新規報告会追加
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="add-meeting-form">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="meeting-date" class="form-label">日付</label>
+                        <input type="date" class="form-control" id="meeting-date" required>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="start-time" class="form-label">開始時間</label>
+                            <input type="time" class="form-control" id="start-time" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="end-time" class="form-label">終了時間</label>
+                            <input type="time" class="form-control" id="end-time" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="meeting-title" class="form-label">タイトル</label>
+                        <input type="text" class="form-control" id="meeting-title" 
+                               placeholder="例: 1月定例報告会" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="meeting-description" class="form-label">説明</label>
+                        <textarea class="form-control" id="meeting-description" rows="3" 
+                                  placeholder="報告会の詳細な説明を入力してください..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        キャンセル
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> 保存
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 編集モーダル -->
+<div class="modal fade" id="editMeetingModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-edit"></i> 報告会編集
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="edit-meeting-form">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="edit-meeting-date" class="form-label">日付</label>
+                        <input type="date" class="form-control" id="edit-meeting-date" required>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="edit-start-time" class="form-label">開始時間</label>
+                            <input type="time" class="form-control" id="edit-start-time" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="edit-end-time" class="form-label">終了時間</label>
+                            <input type="time" class="form-control" id="edit-end-time" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-meeting-title" class="form-label">タイトル</label>
+                        <input type="text" class="form-control" id="edit-meeting-title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-meeting-description" class="form-label">説明</label>
+                        <textarea class="form-control" id="edit-meeting-description" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        キャンセル
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> 更新
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// モーダル表示
+function showAddMeetingModal() {
+    const modal = new bootstrap.Modal(document.getElementById('addMeetingModal'));
+    modal.show();
+}
+
+function editMeeting(id) {
+    // 実際の実装では、サーバーからデータを取得
+    document.getElementById('edit-meeting-date').value = '2024-01-31';
+    document.getElementById('edit-start-time').value = '14:00';
+    document.getElementById('edit-end-time').value = '16:00';
+    document.getElementById('edit-meeting-title').value = '1月定例報告会';
+    document.getElementById('edit-meeting-description').value = '月次進捗報告と来月の計画について';
+    
+    const modal = new bootstrap.Modal(document.getElementById('editMeetingModal'));
+    modal.show();
+}
+
+function deleteMeeting(id) {
+    if (confirm('この報告会を削除しますか？')) {
+        showNotification('報告会を削除しました', 'success');
+        // 実際の実装では、HTMXでサーバーに削除リクエストを送信
+    }
+}
+
+// フォーム送信
+document.getElementById('add-meeting-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    showNotification('報告会を追加しました', 'success');
+    const modal = bootstrap.Modal.getInstance(document.getElementById('addMeetingModal'));
+    modal.hide();
+    // 実際の実装では、HTMXでサーバーに送信
+});
+
+document.getElementById('edit-meeting-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    showNotification('報告会を更新しました', 'success');
+    const modal = bootstrap.Modal.getInstance(document.getElementById('editMeetingModal'));
+    modal.hide();
+    // 実際の実装では、HTMXでサーバーに送信
+});
+
+// カレンダー初期化
+document.addEventListener('DOMContentLoaded', function() {
+    const calendarContainer = document.getElementById('meeting-calendar');
+    if (calendarContainer) {
+        calendarContainer.innerHTML = initCalendar();
+    }
+});
+</script>

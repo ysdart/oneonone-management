@@ -1,0 +1,15 @@
+/* グローバルスタイルのサンプル */
+:root {
+  --brand-color: #646cff;
+}
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
+    Noto Sans, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+}
+
+a {
+  color: var(--brand-color);
+}
+
+

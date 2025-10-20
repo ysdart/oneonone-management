@@ -1,0 +1,271 @@
+<div class="member-detail">
+    <!-- ヘッダー -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2>
+                        <i class="fas fa-user"></i> 佐藤花子
+                        <span class="status-badge status-scheduled ms-2">予定確定</span>
+                    </h2>
+                    <p class="text-muted mb-0">sato@company.com | 予定日: 2024年1月15日 10:00-11:00</p>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-outline-primary" 
+                            onclick="loadPage('./pages/members.html')">
+                        <i class="fas fa-arrow-left"></i> 一覧に戻る
+                    </button>
+                    <button class="btn btn-primary" 
+                            onclick="loadPage('./pages/member-edit.html')">
+                        <i class="fas fa-edit"></i> 編集
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- 左カラム: 1on1記録（ドキュメント表示） -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-file-alt"></i> 1on1記録
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="doc-content">
+                        <h3 class="doc-title">1on1記録 - 2024年1月15日</h3>
+                        <div class="doc-meta mb-3">
+                            <span class="me-3"><i class="fas fa-user-tie"></i> メンター: 田中太郎</span>
+                            <span><i class="fas fa-user"></i> メンバー: 佐藤花子</span>
+                        </div>
+                        <hr>
+                        <h4>議題</h4>
+                        <ol>
+                            <li>今月の進捗確認</li>
+                            <li>目標達成状況</li>
+                            <li>来月の計画</li>
+                            <li>キャリア相談</li>
+                        </ol>
+                        <h4>進捗確認</h4>
+                        <ul>
+                            <li>新機能開発: <strong>80%完了</strong></li>
+                            <li>テストケース作成: <strong>完了</strong></li>
+                            <li>ドキュメント整備: <strong>30%完了</strong></li>
+                        </ul>
+                        <h4>目標達成状況</h4>
+                        <p>今月の目標は概ね達成できています。特にテストケースの作成が予定より早く完了しました。</p>
+                        <h4>来月の計画</h4>
+                        <ul>
+                            <li>新機能のリリース</li>
+                            <li>パフォーマンス最適化</li>
+                            <li>ドキュメント整備の完了</li>
+                        </ul>
+                        <h4>キャリア相談</h4>
+                        <p>リードエンジニアへのステップアップを目指したいとのこと。以下に取り組みます。</p>
+                        <ul>
+                            <li>技術スキルの向上</li>
+                            <li>チームマネジメント経験の積み重ね</li>
+                        </ul>
+                        <h4>アクションアイテム</h4>
+                        <ul>
+                            <li>リードエンジニアの要件整理</li>
+                            <li>技術勉強会の企画</li>
+                            <li>次回1on1までに進捗報告</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右カラム: 確認事項・評価・目標 -->
+        <div class="col-md-4">
+            <!-- 確認事項回答 -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-check-square"></i> 確認事項回答
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6>Q1. 今月の目標達成度はいかがですか？</h6>
+                        <p class="text-muted">**80%達成**しました。新機能開発が順調に進んでいます。</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Q2. 困っていることはありますか？</h6>
+                        <p class="text-muted">特にありません。チームのサポートもあり、順調です。</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Q3. 来月の目標は？</h6>
+                        <p class="text-muted">新機能のリリースと、**パフォーマンス最適化**に取り組みます。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 評価結果 -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-star"></i> 評価結果
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <span>技術スキル</span>
+                            <span class="fw-bold text-primary">8/10</span>
+                        </div>
+                        <div class="progress mt-1">
+                            <div class="progress-bar bg-primary" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <span>コミュニケーション</span>
+                            <span class="fw-bold text-success">9/10</span>
+                        </div>
+                        <div class="progress mt-1">
+                            <div class="progress-bar bg-success" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <span>目標達成</span>
+                            <span class="fw-bold text-warning">7/10</span>
+                        </div>
+                        <div class="progress mt-1">
+                            <div class="progress-bar bg-warning" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <span>チームワーク</span>
+                            <span class="fw-bold text-info">8/10</span>
+                        </div>
+                        <div class="progress mt-1">
+                            <div class="progress-bar bg-info" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="text-center">
+                        <h5 class="text-primary">総合評価: 8.0/10</h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 目標管理 -->
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-bullseye"></i> 目標管理
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="goal-item mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="mb-0">新機能開発</h6>
+                            <span class="badge bg-success">進行中</span>
+                        </div>
+                        <div class="progress mb-2">
+                            <div class="progress-bar bg-success" style="width: 80%"></div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small class="text-muted">進捗: 80%</small>
+                            <small class="text-muted">期限: 2024/01/31</small>
+                        </div>
+                    </div>
+                    
+                    <div class="goal-item mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="mb-0">テストケース作成</h6>
+                            <span class="badge bg-success">完了</span>
+                        </div>
+                        <div class="progress mb-2">
+                            <div class="progress-bar bg-success" style="width: 100%"></div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small class="text-muted">進捗: 100%</small>
+                            <small class="text-muted">期限: 2024/01/15</small>
+                        </div>
+                    </div>
+                    
+                    <div class="goal-item">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="mb-0">ドキュメント整備</h6>
+                            <span class="badge bg-warning">開始</span>
+                        </div>
+                        <div class="progress mb-2">
+                            <div class="progress-bar bg-warning" style="width: 30%"></div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small class="text-muted">進捗: 30%</small>
+                            <small class="text-muted">期限: 2024/02/15</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 履歴 -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-history"></i> 1on1履歴
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>実施日</th>
+                                    <th>時間</th>
+                                    <th>ステータス</th>
+                                    <th>評価</th>
+                                    <th>メモ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2024-01-15</td>
+                                    <td>10:00-11:00</td>
+                                    <td><span class="status-badge status-scheduled">予定</span></td>
+                                    <td>-</td>
+                                    <td>次回の1on1</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-12-15</td>
+                                    <td>14:00-15:00</td>
+                                    <td><span class="status-badge status-completed">実施済</span></td>
+                                    <td>7.5/10</td>
+                                    <td>年末の振り返りと来年の目標設定</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-11-15</td>
+                                    <td>10:00-11:00</td>
+                                    <td><span class="status-badge status-completed">実施済</span></td>
+                                    <td>8.0/10</td>
+                                    <td>新プロジェクトの立ち上げについて</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.doc-content { line-height: 1.9; }
+.doc-content .doc-title { font-size: 1.25rem; margin-bottom: .25rem; }
+.doc-content h4 { margin-top: 1.25rem; font-size: 1.05rem; }
+.doc-content p { margin: .5rem 0; }
+.doc-content ul, .doc-content ol { padding-left: 1.2rem; margin: .25rem 0 .75rem; }
+.doc-content hr { margin: .75rem 0 1rem; }
+</style>

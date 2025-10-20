@@ -1,0 +1,330 @@
+<div class="members-list">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-users"></i> メンバー一覧</h2>
+            <p class="text-muted">メンバーの1on1実施状況を確認できます</p>
+        </div>
+    </div>
+    <!-- 統計情報 -->
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="text-success">1</h5>
+                    <p class="text-muted mb-0">実施済</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="text-warning">2</h5>
+                    <p class="text-muted mb-0">予定確定</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="text-danger">2</h5>
+                    <p class="text-muted mb-0">未確定</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- フィルターと検索 -->
+    <div class="row mb-4">
+        <div class="col-md-2">
+            <label for="month-select" class="form-label">月選択</label>
+            <select class="form-select" id="month-select" onchange="filterByMonth(this.value)">
+                <option value="2024-01" selected>2024年1月</option>
+                <option value="2023-12">2023年12月</option>
+                <option value="2023-11">2023年11月</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="status-filter" class="form-label">ステータス</label>
+            <select class="form-select" id="status-filter" onchange="filterByStatus(this.value)">
+                <option value="">すべて</option>
+                <option value="completed">実施済</option>
+                <option value="scheduled">予定確定</option>
+                <option value="pending">未確定</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="search-input" class="form-label">メンバー</label>
+            <input type="text" class="form-control" id="search-input" placeholder="メンバー名で検索..." onkeyup="searchMembers(this.value)">
+        </div>
+        <div class="col-md-3">
+            <label for="search-input" class="form-label">メンター</label>
+            <input type="text" class="form-control" id="search-input" placeholder="メンバー名で検索..." value="田中太郎">
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+            <button class="btn btn-outline-secondary w-100" onclick="resetFilters()">
+                <i class="fas fa-undo"></i> リセット
+            </button>
+        </div>
+    </div>
+
+    <!-- メンバー一覧テーブル -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="fas fa-list"></i> メンバー一覧
+            </h5>
+            <span class="badge bg-primary" id="member-count">5名</span>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>氏名</th>
+                            <th>状況</th>
+                            <th>予定日</th>
+                            <th>担当メンター</th>
+                            <th>最終更新</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="members-table-body">
+                        <tr data-member="sato" data-status="scheduled">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <!-- <div class="avatar me-3">
+                                        <i class="fas fa-user-circle fa-2x text-primary"></i>
+                                    </div> -->
+                                    <div>
+                                        <h6 class="mb-0">佐藤花子</h6>
+                                        <small class="text-muted">sato@company.com</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-scheduled">予定確定</span>
+                            </td>
+                            <td>
+                                <span class="text-warning">2024/01/15</span>
+                                <br><small class="text-muted">10:00-11:00</small>
+                            </td>
+                            <td>田中太郎</td>
+                            <td>
+                                <small class="text-muted">2024/01/10</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" 
+                                            onclick="loadPage('./pages/member-detail.html')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-outline-success" 
+                                            onclick="loadPage('./pages/member-edit.html')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-member="suzuki" data-status="completed">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <!-- <div class="avatar me-3">
+                                        <i class="fas fa-user-circle fa-2x text-success"></i>
+                                    </div> -->
+                                    <div>
+                                        <h6 class="mb-0">鈴木一郎</h6>
+                                        <small class="text-muted">suzuki@company.com</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-completed">実施済</span>
+                            </td>
+                            <td>
+                                <span class="text-success">2024/01/18</span>
+                                <br><small class="text-muted">14:00-15:00</small>
+                            </td>
+                            <td>田中太郎</td>
+                            <td>
+                                <small class="text-muted">2024/01/18</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" 
+                                            onclick="loadPage('./pages/member-detail.html')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-outline-success" 
+                                            onclick="loadPage('./pages/member-edit.html')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-member="takahashi" data-status="pending">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <!-- <div class="avatar me-3">
+                                        <i class="fas fa-user-circle fa-2x text-warning"></i>
+                                    </div> -->
+                                    <div>
+                                        <h6 class="mb-0">高橋美咲</h6>
+                                        <small class="text-muted">takahashi@company.com</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-pending">未確定</span>
+                            </td>
+                            <td>
+                                <span class="text-muted">未定</span>
+                            </td>
+                            <td>田中太郎</td>
+                            <td>
+                                <small class="text-muted">2024/01/08</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" 
+                                            onclick="loadPage('./pages/member-detail.html')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-outline-success" 
+                                            onclick="loadPage('./pages/member-edit.html')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-member="yamada" data-status="scheduled">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <!-- <div class="avatar me-3">
+                                        <i class="fas fa-user-circle fa-2x text-info"></i>
+                                    </div> -->
+                                    <div>
+                                        <h6 class="mb-0">山田太郎</h6>
+                                        <small class="text-muted">yamada@company.com</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-scheduled">予定確定</span>
+                            </td>
+                            <td>
+                                <span class="text-warning">2024/01/22</span>
+                                <br><small class="text-muted">15:00-16:00</small>
+                            </td>
+                            <td>田中太郎</td>
+                            <td>
+                                <small class="text-muted">2024/01/12</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" 
+                                            onclick="loadPage('./pages/member-detail.html')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-outline-success" 
+                                            onclick="loadPage('./pages/member-edit.html')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-member="tanaka" data-status="pending">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <!-- <div class="avatar me-3">
+                                        <i class="fas fa-user-circle fa-2x text-secondary"></i>
+                                    </div> -->
+                                    <div>
+                                        <h6 class="mb-0">田中次郎</h6>
+                                        <small class="text-muted">tanaka@company.com</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-pending">未確定</span>
+                            </td>
+                            <td>
+                                <span class="text-muted">未定</span>
+                            </td>
+                            <td>田中太郎</td>
+                            <td>
+                                <small class="text-muted">2024/01/05</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" 
+                                            onclick="loadPage('./pages/member-detail.html')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-outline-success" 
+                                            onclick="loadPage('./pages/member-edit.html')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// フィルター機能
+function filterByMonth(month) {
+    console.log('月でフィルター:', month);
+    showNotification(`${month}のデータを表示中`, 'info');
+}
+
+function filterByStatus(status) {
+    const rows = document.querySelectorAll('#members-table-body tr');
+    rows.forEach(row => {
+        if (!status || row.dataset.status === status) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+    
+    // 表示件数を更新
+    const visibleRows = document.querySelectorAll('#members-table-body tr[style=""]').length;
+    document.getElementById('member-count').textContent = `${visibleRows}名`;
+}
+
+function searchMembers(query) {
+    const rows = document.querySelectorAll('#members-table-body tr');
+    rows.forEach(row => {
+        const name = row.querySelector('h6').textContent.toLowerCase();
+        if (name.includes(query.toLowerCase())) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+    
+    // 表示件数を更新
+    const visibleRows = document.querySelectorAll('#members-table-body tr[style=""]').length;
+    document.getElementById('member-count').textContent = `${visibleRows}名`;
+}
+
+function resetFilters() {
+    document.getElementById('month-select').value = '2024-01';
+    document.getElementById('status-filter').value = '';
+    document.getElementById('search-input').value = '';
+    
+    const rows = document.querySelectorAll('#members-table-body tr');
+    rows.forEach(row => {
+        row.style.display = '';
+    });
+    
+    document.getElementById('member-count').textContent = '5名';
+    showNotification('フィルターをリセットしました', 'info');
+}
+</script>
+
+

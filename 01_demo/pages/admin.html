@@ -1,0 +1,191 @@
+<div class="admin-menu">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-cog"></i> 管理者メニュー</h2>
+            <p class="text-muted">システムの設定と管理を行います</p>
+        </div>
+    </div>
+
+    <!-- 管理機能一覧 -->
+    <div class="row">
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 admin-card" 
+                 onclick="loadPage('./pages/admin-schedule.html')">
+                <div class="card-body text-center">
+                    <div class="admin-icon mb-3">
+                        <i class="fas fa-calendar-alt fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">報告会日程管理</h5>
+                    <p class="card-text text-muted">
+                        報告会の日程を設定・管理します
+                    </p>
+                    <div class="admin-stats">
+                        <small class="text-muted">登録済み: 3件</small>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <button class="btn btn-primary w-100">
+                        <i class="fas fa-arrow-right"></i> 管理画面へ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 admin-card" 
+                 onclick="loadPage('./pages/admin-check-items.html')">
+                <div class="card-body text-center">
+                    <div class="admin-icon mb-3">
+                        <i class="fas fa-check-square fa-3x text-success"></i>
+                    </div>
+                    <h5 class="card-title">確認事項管理</h5>
+                    <p class="card-text text-muted">
+                        共通確認事項を設定・管理します
+                    </p>
+                    <div class="admin-stats">
+                        <small class="text-muted">登録済み: 5件</small>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <button class="btn btn-success w-100">
+                        <i class="fas fa-arrow-right"></i> 管理画面へ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 admin-card" 
+                 onclick="loadPage('./pages/admin-evaluation.html')">
+                <div class="card-body text-center">
+                    <div class="admin-icon mb-3">
+                        <i class="fas fa-star fa-3x text-warning"></i>
+                    </div>
+                    <h5 class="card-title">評価項目管理</h5>
+                    <p class="card-text text-muted">
+                        評価項目とスケールを設定します
+                    </p>
+                    <div class="admin-stats">
+                        <small class="text-muted">登録済み: 4件</small>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <button class="btn btn-warning w-100">
+                        <i class="fas fa-arrow-right"></i> 管理画面へ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 admin-card" 
+                 onclick="loadPage('./pages/admin-users.html')">
+                <div class="card-body text-center">
+                    <div class="admin-icon mb-3">
+                        <i class="fas fa-users fa-3x text-info"></i>
+                    </div>
+                    <h5 class="card-title">ユーザー管理</h5>
+                    <p class="card-text text-muted">
+                        ユーザーと担当割り当てを管理します
+                    </p>
+                    <div class="admin-stats">
+                        <small class="text-muted">登録済み: 12名</small>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <button class="btn btn-info w-100">
+                        <i class="fas fa-arrow-right"></i> 管理画面へ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- システム統計 -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-bar"></i> システム統計
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="stat-item text-center">
+                                <h4 class="text-primary">12</h4>
+                                <p class="text-muted mb-0">登録ユーザー数</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-item text-center">
+                                <h4 class="text-success">45</h4>
+                                <p class="text-muted mb-0">今月の1on1実施数</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-item text-center">
+                                <h4 class="text-warning">8</h4>
+                                <p class="text-muted mb-0">今後の予定数</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-item text-center">
+                                <h4 class="text-info">85%</h4>
+                                <p class="text-muted mb-0">実施率</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+.admin-card {
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.admin-icon {
+    transition: transform 0.2s ease-in-out;
+}
+
+.admin-card:hover .admin-icon {
+    transform: scale(1.1);
+}
+
+.stat-item {
+    padding: 20px;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.activity-item {
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.activity-item:hover {
+    background-color: #f8f9fa;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f8f9fa;
+}
+</style>
