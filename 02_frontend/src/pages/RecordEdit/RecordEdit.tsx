@@ -15,7 +15,7 @@ const memberData: Record<number, Member> = {
   3: { name: '鈴木一郎', department: 'マーケティング部', status: '休職中' },
 }
 
-function MemberEdit() {
+function RecordEdit() {
   const { id } = useParams<{ id: string }>()
   const member = memberData[parseInt(id || '0')]
   
@@ -116,4 +116,4 @@ function MemberEdit() {
   )
 }
 
-export default MemberEdit
+export default RecordEdit

@@ -1,36 +1,37 @@
 import { Route, Routes } from 'react-router-dom'
 import AppLayout from '../components/AppLayout/AppLayout'
 import Login from '../pages/Login/Login'
-import Sample from '../pages/Sample/Sample'
 import Top from '../pages/Top/Top'
-import MemberList from '../pages/MemberList/MemberList'
-import MemberDetail from '../pages/MemberDetail/MemberDetail'
-import MemberEdit from '../pages/MemberEdit/MemberEdit'
-import AdminMenu from '../pages/AdminMenu/AdminMenu'
-import AdminSchedule from '../pages/AdminSchedule/AdminSchedule'
-import AdminQuestions from '../pages/AdminQuestions/AdminQuestions'
-import AdminUsers from '../pages/AdminUsers/AdminUsers'
+import Records from '../pages/Records/Records'
+import RecordDetail from '../pages/RecordDetail/RecordDetail'
+import RecordEdit from '../pages/RecordEdit/RecordEdit'
+import RecordCreate from '../pages/RecordCreate/RecordCreate'
+import Questions from '../pages/Questions/Questions'
 import NotFound from '../pages/NotFound/NotFound'
 
 function AppRoutes() {
   return (
     <Routes>
+      {/* 認証 */}
       <Route path="/login" element={<Login />} />
+
+      {/* TOP画面 */}
       <Route path="/" element={<AppLayout><Top /></AppLayout>} />
       <Route path="/top" element={<AppLayout><Top /></AppLayout>} />
-      <Route path="/members" element={<AppLayout><MemberList /></AppLayout>} />
-      <Route path="/members/:id" element={<AppLayout><MemberDetail /></AppLayout>} />
-      <Route path="/members/:id/edit" element={<AppLayout><MemberEdit /></AppLayout>} />
-      <Route path="/admin" element={<AppLayout><AdminMenu /></AppLayout>} />
-      <Route path="/admin/schedule" element={<AppLayout><AdminSchedule /></AppLayout>} />
-      <Route path="/admin/questions" element={<AppLayout><AdminQuestions /></AppLayout>} />
-      <Route path="/admin/users" element={<AppLayout><AdminUsers /></AppLayout>} />
-      <Route path="/sample" element={<AppLayout><Sample /></AppLayout>} />
+
+      {/* 記録一覧・詳細・編集・新規 */}
+      <Route path="/records" element={<AppLayout><Records /></AppLayout>} />
+      <Route path="/records/:id" element={<AppLayout><RecordDetail /></AppLayout>} />
+      <Route path="/records/:id/edit" element={<AppLayout><RecordEdit /></AppLayout>} />
+      <Route path="/records/create" element={<AppLayout><RecordCreate /></AppLayout>} />
+
+      {/* 管理（確認事項管理） */}
+      <Route path="/questions" element={<AppLayout><Questions /></AppLayout>} />
+
       <Route path="*" element={<AppLayout><NotFound /></AppLayout>} />
     </Routes>
   )
 }
 
 export default AppRoutes
-
 

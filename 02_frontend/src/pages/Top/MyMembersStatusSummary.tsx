@@ -18,7 +18,7 @@ interface StatusData {
   pending: number
 }
 
-interface MyMembersStatusProps {
+interface MyMembersStatusSummaryProps {
   myMembersData: StatusData
   organizationData: StatusData
 }
@@ -62,15 +62,15 @@ function StatusCard({
   )
 }
 
-export default function MyMembersStatus({ 
+export default function MyMembersStatusSummary({ 
   myMembersData, 
   organizationData 
-}: MyMembersStatusProps) {
+}: MyMembersStatusSummaryProps) {
   const [showOrganization, setShowOrganization] = useState(false)
   
   const currentData = showOrganization ? organizationData : myMembersData
-  // const title = showOrganization ? '今月の実施状況（組織全体）' : '今月の実施状況（担当メンバー）'
-  const title = '今月の実施状況'
+  const title = showOrganization ? '今月の実施状況（組織全体）' : '今月の実施状況（担当メンバー）'
+  // const title = '今月の実施状況'
 
   return (
     <Card sx={{ maxWidth: 900, width: '100%' }}>

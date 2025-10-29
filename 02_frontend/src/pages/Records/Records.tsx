@@ -38,7 +38,7 @@ const mockMembers: Member[] = [
     id: 4,
     name: '高橋美咲',
     department: '人事部',
-    status: 'overdue',
+    status: 'pending',
     scheduledDate: '2024-01-05',
     mentor: '田中太郎',
     lastUpdated: '2024-01-03',
@@ -54,7 +54,7 @@ const mockMembers: Member[] = [
   },
 ]
 
-function MemberList() {
+function Records() {
   // ステート定義
   const [members] = useState<Member[]>(mockMembers)
   const [filteredMembers, setFilteredMembers] = useState<Member[]>(mockMembers)
@@ -208,4 +208,4 @@ function MemberList() {
   )
 }
 
-export default MemberList
+export default Records

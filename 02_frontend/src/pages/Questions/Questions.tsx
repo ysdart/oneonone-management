@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-function AdminQuestions() {
+function Questions() {
   return (
     <div>
       <h2>確認事項管理</h2>
@@ -21,4 +21,4 @@ function AdminQuestions() {
   )
 }
 
-export default AdminQuestions
+export default Questions

@@ -15,7 +15,7 @@ const memberData: Record<number, Member> = {
   3: { name: '鈴木一郎', department: 'マーケティング部', status: '休職中', lastMeeting: '2023-12-20' },
 }
 
-function MemberDetail() {
+function RecordCreate() {
   const { id } = useParams<{ id: string }>()
   const member = memberData[parseInt(id || '0')]
 
@@ -65,4 +65,4 @@ function MemberDetail() {
   )
 }
 
-export default MemberDetail
+export default RecordCreate

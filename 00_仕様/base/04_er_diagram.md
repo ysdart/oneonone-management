@@ -10,7 +10,7 @@
 - created_at
 - updated_at
 
-### MemberProfile（メンバープロフィール）
+### UsersProfile（メンバープロフィール）
 - profile_id (PK)
 - user_id (FK → User, UNIQUE) ※メンバーのみ
 - department（部署）
@@ -104,7 +104,7 @@
 8. **Goal → GoalResponse**: 1対多
 
 ### 制約・インデックス
-- User.role は 'admin', 'mentor', 'member' のいずれか
+- User.role は 'mentor', 'member' のいずれか
 - OneOnOneRecord.status は 'pending', 'scheduled', 'completed' のいずれか
 - GoalResponse.progress_percent は 0-100 の範囲
 - 各テーブルに created_at, updated_at のインデックス

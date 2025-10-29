@@ -13,8 +13,8 @@ function NavList() {
   const location = useLocation()
   const items = [
     { to: '/top', label: 'TOP画面', icon: <DashboardIcon /> },
-    { to: '/members', label: 'メンバー一覧', icon: <GroupIcon /> },
-    { to: '/admin', label: '管理者メニュー', icon: <SettingsIcon /> },
+    { to: '/records', label: '記録一覧', icon: <GroupIcon /> },
+    { to: '/questions', label: '確認事項管理', icon: <SettingsIcon /> },
   ]
   return (
     <List>

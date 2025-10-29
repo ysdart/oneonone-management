@@ -4,10 +4,7 @@ import {
   Stack, 
   Typography, 
   Divider,
-  Box,
-  IconButton
 } from '@mui/material'
-import GroupIcon from '@mui/icons-material/Group';
 
 interface StatusData {
   completed: number

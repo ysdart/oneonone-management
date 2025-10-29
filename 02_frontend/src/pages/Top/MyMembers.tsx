@@ -19,7 +19,7 @@ interface Member {
   meetingDate?: string
 }
 
-interface TargetMemberListProps {
+interface MyMembersProps {
   members: Member[]
 }
 
@@ -33,7 +33,7 @@ function StatusChip({ status }: { status: 'done' | 'planned' | 'not' }) {
   return <Chip size="small" label={s.label} color={s.color} />
 }
 
-export default function TargetMemberList({ members }: TargetMemberListProps) {
+export default function MyMembers({ members }: MyMembersProps) {
   return (
     <Card sx={{ 
       bgcolor: 'background.paper',

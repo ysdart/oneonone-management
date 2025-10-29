@@ -1,8 +1,8 @@
 import { Box, Stack } from '@mui/material'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import PageHeader from '../../components/PageHeader/PageHeader'
-import MyMembersStatus from './MyMembersStatus'
-import TargetMemberList from './TargetMemberList'
+import MyMembersStatusSummary from './MyMembersStatusSummary'
+import MyMembers from './MyMembers'
 
 const demoMembers = [
   { id: 1, name: '山田 太郎', status: 'done' as const, meetingDate: '2025-10-15' },
@@ -35,8 +35,8 @@ function Top() {
           description="1on1の実施状況と今後の予定を確認できます"
         />
 
-        {/* MyMembersStatus */}
-        <MyMembersStatus 
+        {/* MyMembersStatusSummary */}
+        <MyMembersStatusSummary 
           myMembersData={myMembersData}
           organizationData={organizationData}
         />
@@ -52,14 +52,14 @@ function Top() {
           overflow: 'hidden'
         }}>
 
-          {/* TargetMemberList */}
+          {/* MyMembers */}
           <Box sx={{ 
             width: '100%', 
             maxWidth: '800px', 
             overflow: 'hidden',
             minWidth: 0 // グリッドアイテムの最小幅を0に設定
           }}>
-            <TargetMemberList members={demoMembers} />
+            <MyMembers members={demoMembers} />
           </Box>
         </Box>
       </Stack>
