@@ -1,125 +1,50 @@
 import { useState, useEffect } from 'react'
-import { Container, Stack } from '@mui/material'
+import { Box, Stack, CircularProgress } from '@mui/material'
 import PageHeader from '../../components/PageHeader/PageHeader'
-import FilteredMembersStatus from '../../components/FilteredMembersStatus/FilteredMembersStatus'
-import SearchFilter, { type FilterState } from '../../components/SearchFilter/SearchFilter'
-import MemberListComponent, { type Member } from '../../components/MemberList/MemberList'
+import FilteredMembersStatus from './FilteredMembersStatus'
+import SearchFilter, { type FilterState } from './SearchFilter'
+import MemberListComponent, { type Member } from './MemberList'
 import PeopleIcon from '@mui/icons-material/People'
+import { fetchMembers } from '../../lib/apiClient'
 
-// 仮のメンバーデータ
-const mockMembers: Member[] = [
-  {
-    id: 1,
-    name: '田中太郎',
-    department: '開発部',
-    status: 'completed',
-    scheduledDate: '2024-01-15',
-    mentor: '佐藤花子',
-    lastUpdated: '2024-01-10',
-  },
-  {
-    id: 2,
-    name: '佐藤花子',
-    department: '営業部',
-    status: 'planned',
-    scheduledDate: '2024-01-20',
-    mentor: '鈴木一郎',
-    lastUpdated: '2024-01-08',
-  },
-  {
-    id: 3,
-    name: '鈴木一郎',
-    department: 'マーケティング部',
-    status: 'pending',
-    mentor: '高橋美咲',
-    lastUpdated: '2024-01-05',
-  },
-  {
-    id: 4,
-    name: '高橋美咲',
-    department: '人事部',
-    status: 'pending',
-    scheduledDate: '2024-01-05',
-    mentor: '田中太郎',
-    lastUpdated: '2024-01-03',
-  },
-  {
-    id: 5,
-    name: '山田次郎',
-    department: '開発部',
-    status: 'completed',
-    scheduledDate: '2024-01-12',
-    mentor: '佐藤花子',
-    lastUpdated: '2024-01-11',
-  },
-]
+// 現在の月を取得する関数
+const getCurrentMonth = () => {
+  const now = new Date()
+  return `${now.getFullYear()}年${now.getMonth() + 1}月`
+}
 
 function Records() {
   // ステート定義
-  const [members] = useState<Member[]>(mockMembers)
-  const [filteredMembers, setFilteredMembers] = useState<Member[]>(mockMembers)
+  const [filteredMembers, setFilteredMembers] = useState<Member[]>([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [loading, setLoading] = useState(false)
   const [filters, setFilters] = useState<FilterState>({
-    name: '',
-    department: '',
-    status: '',
-    mentor: '',
-    month: ''
+    month: getCurrentMonth(),
+    mentor: ''
   })
 
-  // 現在の月を取得する関数
-  const getCurrentMonth = () => {
-    const now = new Date()
-    return `${now.getFullYear()}年${now.getMonth() + 1}月`
+  // APIからメンバー情報を取得
+  const loadMembers = async (filterState: FilterState) => {
+    setLoading(true)
+    try {
+      const data = await fetchMembers({
+        month: filterState.month,
+        mentor: filterState.mentor || undefined
+      })
+      setFilteredMembers(data)
+      setPage(0)
+    } catch (error) {
+      console.error('メンバー情報の取得に失敗しました:', error)
+      setFilteredMembers([])
+    } finally {
+      setLoading(false)
+    }
   }
 
-  // フィルタ適用ロジック
+  // フィルタ適用ロジック（API呼び出し）
   const applyFilters = (filterState: FilterState) => {
-    let filtered = [...members]
-
-    if (filterState.name) {
-      filtered = filtered.filter(member => 
-        member.name.toLowerCase().includes(filterState.name.toLowerCase())
-      )
-    }
-
-    if (filterState.department) {
-      filtered = filtered.filter(member => 
-        member.department === filterState.department
-      )
-    }
-
-    if (filterState.status) {
-      const statusMap: Record<string, Member['status']> = {
-        '未実施': 'pending',
-        '完了': 'completed',
-        '予定済み': 'planned'
-      }
-      const statusValue = statusMap[filterState.status]
-      if (statusValue) {
-        filtered = filtered.filter(member => member.status === statusValue)
-      }
-    }
-
-    if (filterState.mentor) {
-      filtered = filtered.filter(member => 
-        member.mentor === filterState.mentor
-      )
-    }
-
-    if (filterState.month) {
-      filtered = filtered.filter(member => {
-        if (!member.scheduledDate) return false
-        const memberDate = new Date(member.scheduledDate)
-        const filterMonth = filterState.month.replace('年', '-').replace('月', '')
-        const memberMonth = `${memberDate.getFullYear()}-${String(memberDate.getMonth() + 1).padStart(2, '0')}`
-        return memberMonth === filterMonth
-      })
-    }
-
-    setFilteredMembers(filtered)
-    setPage(0)
+    loadMembers(filterState)
   }
 
   // フィルター入力の更新
@@ -135,14 +60,11 @@ function Records() {
   // クリアボタン押下時
   const handleClear = () => {
     const clearedFilters = {
-      name: '',
-      department: '',
-      status: '',
-      mentor: '',
-      month: getCurrentMonth()
+      month: getCurrentMonth(),
+      mentor: ''
     }
     setFilters(clearedFilters)
-    setFilteredMembers(members)
+    applyFilters(clearedFilters)
     setPage(0)
   }
 
@@ -161,11 +83,11 @@ function Records() {
     setRowsPerPage(newRowsPerPage)
   }
 
-  // 初回マウント・members更新時 フィルター適用
+  // 初回マウント時に現在の月でデータ取得
   useEffect(() => {
     applyFilters(filters)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [members])
+  }, [])
 
   // 表示データのページネーション適用
   const paginatedMembers = filteredMembers.slice(
@@ -174,7 +96,7 @@ function Records() {
   )
 
   return (
-    <Container maxWidth="lg" sx={{ py: 3 }}>
+    <Box sx={{ p: { xs: 1, md: 3 }, mx: 0, maxWidth: '100%' }}>
       <Stack spacing={3}>
         {/* ページタイトル */}
         <PageHeader
@@ -190,21 +112,29 @@ function Records() {
 
         {/* 検索・フィルタUI */}
         <SearchFilter
+          initialFilters={filters}
           onFilterChange={handleFilterChange}
           onSearch={handleSearch}
           onClear={handleClear}
         />
 
-        {/* メンバーリスト 本体 */}
-        <MemberListComponent
-          members={paginatedMembers}
-          onPageChange={handlePageChange}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          totalCount={filteredMembers.length}
-        />
+        {/* ローディング表示 */}
+        {loading ? (
+          <Box display="flex" justifyContent="center" alignItems="center" minHeight={200}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          /* メンバーリスト 本体 */
+          <MemberListComponent
+            members={paginatedMembers}
+            onPageChange={handlePageChange}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            totalCount={filteredMembers.length}
+          />
+        )}
       </Stack>
-    </Container>
+    </Box>
   )
 }
 

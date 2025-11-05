@@ -9,7 +9,7 @@ interface PageHeaderProps {
 
 export default function PageHeader({ icon, title, description }: PageHeaderProps) {
   return (
-    <Stack spacing={1} mb={2}>
+    <Stack spacing={1} mb={2} sx={{ p: { xs: 1.5, md: 2 } }}>
       <Typography variant="h4" component="h1" fontWeight="bold" display="flex" alignItems="center" gap={1}>
         <Box component="span" sx={{ display: 'flex', alignItems: 'center' }}>
           {icon && (

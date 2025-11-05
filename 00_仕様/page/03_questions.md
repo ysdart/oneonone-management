@@ -2,7 +2,7 @@
 確認事項管理画面
 
 ## ファイル名
-AdminQuestions.tsx
+Questions.tsx
 
 ## 主な構成要素（コンポーネント）
 - PageTitle

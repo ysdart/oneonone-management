@@ -1,8 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Card,
   CardContent,
-  TextField,
   FormControl,
   InputLabel,
   Select,
@@ -11,41 +10,47 @@ import {
   Stack,
   Box,
   Chip,
-  Typography
+  Typography,
+  styled
 } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import dayjs, { type Dayjs } from 'dayjs'
+import 'dayjs/locale/ja'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import ClearIcon from '@mui/icons-material/Clear'
 
+// 年・月選択ボタンのスタイル修正
+const StyledDatePicker = styled(DatePicker)({
+  '& .MuiYearCalendar-button': {
+    display: 'flex !important',
+    alignItems: 'center !important',
+    justifyContent: 'center !important',
+    verticalAlign: 'middle !important',
+    lineHeight: '1.5 !important',
+    padding: '9.6px 19.2px !important',
+  },
+  '& .MuiMonthCalendar-button': {
+    display: 'flex !important',
+    alignItems: 'center !important',
+    justifyContent: 'center !important',
+    verticalAlign: 'middle !important',
+    lineHeight: '1.5 !important',
+  },
+})
+
 export interface FilterState {
-  name: string
-  department: string
-  status: string
-  mentor: string
   month: string
+  mentor: string
 }
 
 interface SearchFilterProps {
+  initialFilters?: FilterState
   onFilterChange: (filters: FilterState) => void
   onSearch: (filters: FilterState) => void
   onClear: () => void
 }
-
-const departments = [
-  '開発部',
-  '営業部',
-  'マーケティング部',
-  '人事部',
-  '経理部',
-  '総務部'
-]
-
-const statuses = [
-  '未実施',
-  '完了',
-  '予定済み',
-  '調整中'
-]
 
 const mentors = [
   '田中太郎',
@@ -60,31 +65,58 @@ const getCurrentMonth = () => {
   return `${now.getFullYear()}年${now.getMonth() + 1}月`
 }
 
-const months = [
-  '2024年1月',
-  '2024年2月',
-  '2024年3月',
-  '2024年4月',
-  '2024年5月',
-  '2024年6月',
-  '2024年7月',
-  '2024年8月',
-  '2024年9月',
-  '2024年10月',
-  '2024年11月',
-  '2024年12月'
-]
+// 文字列形式（"2024年1月"）をDayjsオブジェクトに変換
+const parseMonthString = (monthString: string): Dayjs => {
+  const match = monthString.match(/(\d{4})年(\d{1,2})月/)
+  if (match) {
+    const year = parseInt(match[1], 10)
+    const month = parseInt(match[2], 10) - 1 // 月は0ベース
+    return dayjs(new Date(year, month, 1))
+  }
+  return dayjs()
+}
 
-export default function SearchFilter({ onFilterChange, onSearch, onClear }: SearchFilterProps) {
+// Dayjsオブジェクトを文字列形式（"2024年1月"）に変換
+const formatMonthString = (date: Dayjs | null): string => {
+  if (!date) return getCurrentMonth()
+  return `${date.year()}年${date.month() + 1}月`
+}
+
+export default function SearchFilter({ initialFilters, onFilterChange, onSearch, onClear }: SearchFilterProps) {
+  const currentMonth = getCurrentMonth()
+  const initialMonth = initialFilters?.month || currentMonth
   const [filters, setFilters] = useState<FilterState>({
-    name: '',
-    department: '',
-    status: '',
-    mentor: '',
-    month: getCurrentMonth() // デフォルト値を今月に設定
+    month: initialMonth, // デフォルト値を今月に設定（必須）
+    mentor: initialFilters?.mentor || ''
   })
+  const [selectedMonth, setSelectedMonth] = useState<Dayjs>(parseMonthString(initialMonth))
 
   const [activeFilters, setActiveFilters] = useState<string[]>([])
+
+  // 親コンポーネントから渡された初期値と同期
+  useEffect(() => {
+    if (initialFilters) {
+      setFilters(initialFilters)
+      if (initialFilters.month) {
+        setSelectedMonth(parseMonthString(initialFilters.month))
+      }
+    }
+  }, [initialFilters])
+
+  const handleMonthChange = (newDate: Dayjs | null) => {
+    if (!newDate) return
+    setSelectedMonth(newDate)
+    const monthString = formatMonthString(newDate)
+    const newFilters = { ...filters, month: monthString }
+    setFilters(newFilters)
+    onFilterChange(newFilters)
+    
+    // アクティブフィルターの更新
+    const newActiveFilters = Object.entries(newFilters)
+      .filter(([_, val]) => val !== '')
+      .map(([key, _]) => key)
+    setActiveFilters(newActiveFilters)
+  }
 
   const handleFilterChange = (field: keyof FilterState, value: string) => {
     const newFilters = { ...filters, [field]: value }
@@ -103,14 +135,13 @@ export default function SearchFilter({ onFilterChange, onSearch, onClear }: Sear
   }
 
   const handleClear = () => {
+    const currentMonthValue = getCurrentMonth()
     const clearedFilters = {
-      name: '',
-      department: '',
-      status: '',
-      mentor: '',
-      month: getCurrentMonth() // クリア時も今月をデフォルトに
+      month: currentMonthValue, // クリア時も今月をデフォルトに（必須）
+      mentor: ''
     }
     setFilters(clearedFilters)
+    setSelectedMonth(parseMonthString(currentMonthValue))
     setActiveFilters([])
     onClear()
   }
@@ -126,9 +157,6 @@ export default function SearchFilter({ onFilterChange, onSearch, onClear }: Sear
 
   const getFilterLabel = (key: string) => {
     const labels: Record<string, string> = {
-      name: '氏名',
-      department: '部署',
-      status: 'ステータス',
       mentor: '担当メンター',
       month: '月'
     }
@@ -137,10 +165,8 @@ export default function SearchFilter({ onFilterChange, onSearch, onClear }: Sear
 
   const getFilterValue = (key: string) => {
     const value = filters[key as keyof FilterState]
-    if (key === 'department') return departments.find(d => d === value) || ''
-    if (key === 'status') return statuses.find(s => s === value) || ''
     if (key === 'mentor') return mentors.find(m => m === value) || ''
-    if (key === 'month') return months.find(m => m === value) || ''
+    if (key === 'month') return value
     return value
   }
 
@@ -148,64 +174,28 @@ export default function SearchFilter({ onFilterChange, onSearch, onClear }: Sear
     <Card sx={{ mb: 2 }}>
       <CardContent>
         <Stack spacing={3}>
-          {/* 検索バー */}
-          <Stack direction="row" spacing={1} alignItems="center">
-            <TextField
-              fullWidth
-              placeholder="メンバー名で検索..."
-              value={filters.name}
-              onChange={(e) => handleFilterChange('name', e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-              InputProps={{
-                startAdornment: <SearchIcon sx={{ color: 'text.secondary', mr: 1 }} />
-              }}
-            />
-            <Button
-              variant="contained"
-              onClick={handleSearch}
-              startIcon={<SearchIcon />}
-              sx={{ minWidth: 100 }}
-            >
-              検索
-            </Button>
-          </Stack>
-
           {/* フィルター */}
           <Stack spacing={2}>
             <Typography variant="h6" fontWeight="bold">
               フィルター条件
             </Typography>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <FormControl fullWidth>
-                <InputLabel>部署</InputLabel>
-                <Select
-                  value={filters.department}
-                  onChange={(e) => handleFilterChange('department', e.target.value)}
-                  label="部署"
-                >
-                  <MenuItem value="">すべて</MenuItem>
-                  {departments.map((dept) => (
-                    <MenuItem key={dept} value={dept}>
-                      {dept}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              <FormControl fullWidth>
-                <InputLabel>ステータス</InputLabel>
-                <Select
-                  value={filters.status}
-                  onChange={(e) => handleFilterChange('status', e.target.value)}
-                  label="ステータス"
-                >
-                  <MenuItem value="">すべて</MenuItem>
-                  {statuses.map((status) => (
-                    <MenuItem key={status} value={status}>
-                      {status}
-                    </MenuItem>
-                  ))}
-                </Select>
+              <FormControl fullWidth required>
+                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ja">
+                  <StyledDatePicker
+                    label="月 *"
+                    value={selectedMonth}
+                    onChange={handleMonthChange}
+                    views={['year', 'month']}
+                    format="YYYY年M月"
+                    slotProps={{
+                      textField: {
+                        required: true,
+                        fullWidth: true,
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
               </FormControl>
 
               <FormControl fullWidth>
@@ -219,22 +209,6 @@ export default function SearchFilter({ onFilterChange, onSearch, onClear }: Sear
                   {mentors.map((mentor) => (
                     <MenuItem key={mentor} value={mentor}>
                       {mentor}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              <FormControl fullWidth required>
-                <InputLabel>月 *</InputLabel>
-                <Select
-                  value={filters.month}
-                  onChange={(e) => handleFilterChange('month', e.target.value)}
-                  label="月 *"
-                  required
-                >
-                  {months.map((month) => (
-                    <MenuItem key={month} value={month}>
-                      {month}
                     </MenuItem>
                   ))}
                 </Select>

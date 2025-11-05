@@ -12,4 +12,20 @@ a {
   color: var(--brand-color);
 }
 
+/* MUI DatePicker 年・月選択ボタンのテキスト位置修正 */
+.MuiYearCalendar-button,
+.MuiMonthCalendar-button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  vertical-align: middle !important;
+}
+
+.MuiYearCalendar-button > span,
+.MuiMonthCalendar-button > span {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1.5 !important;
+}
 

@@ -1,23 +1,83 @@
-import { Link } from 'react-router-dom'
+import { useMemo, useState } from 'react'
+import { Container, Stack, Button } from '@mui/material'
+import SettingsIcon from '@mui/icons-material/Settings'
+import AddIcon from '@mui/icons-material/Add'
+import PageHeader from '../../components/PageHeader/PageHeader'
+import SearchFilter, { type QuestionFilterState } from './SearchFilter.tsx'
+import QuestionList from './QuestionList.tsx'
+import QuestionForm from './QuestionForm.tsx'
+import { type Question, type QuestionFormInput, createEmptyQuestion, generateMockQuestions, upsertQuestion, deleteQuestion as deleteQuestionUtil, reorderQuestions } from './types.ts'
 
 function Questions() {
+  const [questions, setQuestions] = useState<Question[]>(() => generateMockQuestions())
+  const [filters, setFilters] = useState<QuestionFilterState>({ period: '' })
+  const [editing, setEditing] = useState<{ open: boolean; initial?: Question }>(() => ({ open: false }))
+
+  const filtered = useMemo(() => {
+    if (!filters.period) return questions
+    return questions.filter(q => q.startPeriod === filters.period)
+  }, [questions, filters])
+
+  const handleOpenAdd = () => {
+    setEditing({ open: true, initial: createEmptyQuestion(questions) })
+  }
+
+  const handleOpenEdit = (q: Question) => {
+    setEditing({ open: true, initial: q })
+  }
+
+  const handleCloseForm = () => {
+    setEditing({ open: false })
+  }
+
+  const handleSubmit = (input: QuestionFormInput) => {
+    setQuestions(prev => upsertQuestion(prev, input))
+    setEditing({ open: false })
+  }
+
+  const handleDelete = (id: number) => {
+    setQuestions(prev => deleteQuestionUtil(prev, id))
+  }
+
+  const handleReorder = (sourceIndex: number, destinationIndex: number) => {
+    setQuestions(prev => reorderQuestions(prev, sourceIndex, destinationIndex))
+  }
+
   return (
-    <div>
-      <h2>確認事項管理</h2>
-      <div style={{ marginBottom: 20 }}>
-        <Link to="/admin" style={{ color: '#646cff' }}>← 管理者メニューに戻る</Link>
-      </div>
-      
-      <div style={{ border: '1px solid #ddd', padding: 20, borderRadius: 4 }}>
-        <h3>共通確認事項の設定</h3>
-        <p>（ここに確認事項管理の機能が実装されます）</p>
-        <ul>
-          <li>共通質問項目の追加・編集・削除</li>
-          <li>質問の優先順位設定</li>
-          <li>回答形式の設定（テキスト・数値・選択肢）</li>
-        </ul>
-      </div>
-    </div>
+    <Container maxWidth="lg" sx={{ py: 3 }}>
+      <Stack spacing={3}>
+        <PageHeader
+          icon={<SettingsIcon />}
+          title="確認事項管理"
+          description="共通質問（確認事項）の一覧・追加・編集・削除・表示順の管理を行います"
+        />
+
+        <Stack direction="row" justifyContent="flex-end">
+          <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpenAdd}>
+            確認事項を追加
+          </Button>
+        </Stack>
+
+        <SearchFilter
+          onFilterChange={setFilters}
+          onClear={() => setFilters({ period: '' })}
+        />
+
+        <QuestionList
+          questions={filtered}
+          onEdit={handleOpenEdit}
+          onDelete={handleDelete}
+          onReorder={handleReorder}
+        />
+
+        <QuestionForm
+          open={editing.open}
+          initial={editing.initial}
+          onClose={handleCloseForm}
+          onSubmit={handleSubmit}
+        />
+      </Stack>
+    </Container>
   )
 }
 
